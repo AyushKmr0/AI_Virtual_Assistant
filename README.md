@@ -14,7 +14,7 @@ A voice-based virtual assistant built using the MERN stack (MongoDB, Express.js,
   - Option to upload custom images
 - 🔐 Sign in / Sign up with Google and GitHub (OAuth)
 - 🧠 Basic AI command response logic using Gemini handler
-- 🧾 History memory system (assistant remembers recent conversation context using MongoDB, up to last 100 commands)
+- 🧾 History memory system (assistant remembers recent conversation context using MongoDB, up to last 100 commands) 
 
 ---
 
