@@ -1,12 +1,13 @@
 import React, { useContext, useRef, useState } from "react";
 import Card from "../components/Card";
-import img1 from "../assets/image1.png";
+import img1 from "../assets/image1.avif";
 import img2 from "../assets/image2.jpg";
-import img3 from "../assets/image3.png";
+import img3 from "../assets/image3.jpg";
 import img4 from "../assets/image4.png";
-import img5 from "../assets/image5.png";
-import img6 from "../assets/image6.jpeg";
-import img7 from "../assets/image7.jpeg";
+import img5 from "../assets/image5.avif";
+import img6 from "../assets/image6.jpg";
+import img7 from "../assets/image7.jpg";
+import img8 from "../assets/image8.webp";
 import { PiPlus } from "react-icons/pi";
 import { FaDeleteLeft } from "react-icons/fa6";
 import { userDataContext } from "../context/UserContext";
@@ -36,7 +37,7 @@ function Customize() {
         userData?.assistantName || userData?.assistantImage
     );
 
-    const predefinedImages = [img1, img2, img3, img4, img5, img6, img7];
+    const predefinedImages = [img1, img2, img3, img4, img5, img6, img7, img8];
 
     const handleImage = (e) => {
         const file = e.target.files[0];
