@@ -129,8 +129,8 @@ export const askToAssistant = async (req, res) => {
         const finalInput = userInput?.trim() || command;
 
         user.history.push(finalInput);
-        if (user.history.length > 30) {
-            user.history = user.history.slice(-30);
+        if (user.history.length > 100) {
+            user.history = user.history.slice(-100);
         }
         await user.save();
 
