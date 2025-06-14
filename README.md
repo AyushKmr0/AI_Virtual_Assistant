@@ -118,6 +118,6 @@ npm run dev
 
 ```
 
-##👨‍💻 Author
+## 👨‍💻 Author
 
 Made with ❤️ by Ayush
