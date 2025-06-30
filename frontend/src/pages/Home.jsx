@@ -128,11 +128,11 @@ function Home() {
                 <div className="w-full flex justify-end items-center sticky top-0 z-50">
                     <div className="relative" ref={menuRef}>
                         <PiCirclesThreePlusFill
-                            className="absolute right-10 top-7 md:top-20 md:right-15 text-4xl md:text-6xl cursor-pointer text-blue-700 hover:text-blue-900"
+                            className="absolute right-10 -top-20 md:top-0 md:right-15 text-4xl md:text-6xl cursor-pointer text-blue-700 hover:text-blue-900"
                             onClick={() => setShowMenu((prev) => !prev)}
                         />
                         {showMenu && (
-                            <div className="absolute right-12 top-15 md:top-20 md:right-30 mt-2 w-70 md:w-80 bg-[#d5dade] rounded-lg shadow-md z-10 px-6 py-8">
+                            <div className="absolute right-12 -top-10 md:top-0 md:right-30 mt-2 w-70 md:w-80 bg-[#d5dade] rounded-lg shadow-md z-10 px-6 py-8">
                                 <h2 className="text-xl sm:text-2xl font-bold text-blue-700 p-6 border-b-2">
                                     Welcome,{" "}
                                     {userName
