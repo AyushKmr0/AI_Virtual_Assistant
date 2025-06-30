@@ -145,18 +145,26 @@ const Gemini = ({ unlocked, onUserSpeak, onAssistantSpeak, onAssistantDone }) =>
   };
 
   const safeRecognition = () => {
-    const recognition = recognitionRef.current;
-    if (!recognition) return;
+  const recognition = recognitionRef.current;
+  if (!recognition) return;
 
-    if (!isSpeakingRef.current && !isRecognizingRef.current && unlocked) {
-      try {
-        setTimeout(() => recognition.start(), 500);
-      } catch (error) {
-        if (error.name !== "InvalidStateError") {
-        }
+  if (!isSpeakingRef.current && unlocked) {
+    try {
+      if (!isRecognizingRef.current) {
+        recognition.start();
+      } else {
+        console.log("Recognition already running. Skipping start.");
+      }
+    } catch (error) {
+      if (error.name === "InvalidStateError") {
+        console.warn("Attempted to start recognition while already started.");
+      } else {
+        console.error("Recognition error:", error);
       }
     }
-  };
+  }
+};
+
 
   useEffect(() => {
     const SpeechRecognition =

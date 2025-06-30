@@ -76,33 +76,3 @@ passport.use(
         }
     )
 );
-
-// Facebook Strategy
-passport.use(
-    new FacebookStrategy(
-        {
-            clientID: process.env.FACEBOOK_CLIENT_ID,
-            clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-            callbackURL: "http://localhost:8000/api/auth/facebook/callback",
-            profileFields: ["id", "displayName", "emails"],
-        },
-        async (accessToken, refreshToken, profile, done) => {
-            try {
-                const email = profile.emails?.[0]?.value || `${profile.id}@facebook.com`;
-                let user = await User.findOne({ email });
-
-                if (!user) {
-                    user = await User.create({
-                        name: profile.displayName,
-                        email,
-                        password: crypto.randomBytes(20).toString("hex"),
-                    });
-                }
-
-                return done(null, user);
-            } catch (err) {
-                return done(err, null);
-            }
-        }
-    )
-);

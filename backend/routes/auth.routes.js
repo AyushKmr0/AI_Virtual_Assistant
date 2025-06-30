@@ -39,19 +39,4 @@ authRouter.get(
     handleSocialLogin
 );
 
-// FACEBOOK OAUTH
-authRouter.get(
-    "/facebook",
-    passport.authenticate("facebook", { scope: ["email"] })
-);
-
-authRouter.get(
-    "/facebook/callback",
-    passport.authenticate("facebook", {
-        failureRedirect: "http://localhost:5173/signin",
-        session: true,
-    }),
-    handleSocialLogin
-);
-
 export default authRouter;
