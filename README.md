@@ -2,6 +2,8 @@
 
 A voice-based virtual assistant built using the MERN stack (MongoDB, Express.js, React.js, Node.js). It allows users to speak commands naturally and receive voice responses using the browser's built-in speech synthesis.
 
+![Screenshot 2025-06-30 145238](https://github.com/user-attachments/assets/acd4342c-bf5d-4d02-8512-282406c8b886)
+
 ---
 
 ## 🚀 Current Features
