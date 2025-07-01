@@ -22,10 +22,8 @@ function Customize2() {
     const userName = userData?.name || "there";
 
     useEffect(() => {
-        if (userData?.assistantName) {
-            setAssistantName(userData.assistantName);
-        }
-    }, [userData]); 
+        setAssistantName("");
+    }, []);
 
     const handleUpdateAssistant = async () => {
         if (assistantName.trim().length < 3) {
@@ -81,10 +79,6 @@ function Customize2() {
         } finally {
             setLoading(false);
         }
-    };
-
-    const handleBack = () => {
-        navigate("/customize");
     };
 
     return (
