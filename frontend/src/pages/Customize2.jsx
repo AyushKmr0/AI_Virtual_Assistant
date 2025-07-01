@@ -40,12 +40,13 @@ function Customize2() {
             ) {
                 formData.append("assistantImage", backendImage);
             } else if (selectedImage && !selectedImage.startsWith("blob:")) {
-
-                const { data } = await axios.post(
+                 const absoluteUrl = `${window.location.origin}${selectedImage}`;
+                  
+                  const { data } = await axios.post(
                     `${serverUrl}/api/user/updateAssistantNoFile`,
                     {
-                        assistantName: assistantName.trim(),
-                        imageUrl: selectedImage,
+                      assistantName: assistantName.trim(),
+                      imageUrl: absoluteUrl,
                     },
                     {
                         withCredentials: true,
