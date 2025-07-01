@@ -18,7 +18,7 @@ app.set("trust proxy", 1);
 app.use(
     cors({
         origin: "https://aivirtualassistant.onrender.com",
-        "https://aivirtualassistant-backend.onrender.com"
+        "https://aivirtualassistant-backend.onrender.com",
         credentials: true,
     })
 );
