@@ -10,7 +10,7 @@ function OAuthSuccess() {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await axios.get("http://localhost:8000/api/user/current", {
+                const res = await axios.get("https://aivirtualassistant-backend.onrender.com/api/user/current", {
                     withCredentials: true,
                 });
                 setUserData(res.data);
