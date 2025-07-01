@@ -18,7 +18,7 @@ authRouter.get(
 authRouter.get(
     "/google/callback",
     passport.authenticate("google", {
-        failureRedirect: "http://localhost:5173/signin",
+        failureRedirect: "https://aivirtualassistant.onrender.com//signin",
         session: true,
     }),
     handleSocialLogin
@@ -33,7 +33,7 @@ authRouter.get(
 authRouter.get(
     "/github/callback",
     passport.authenticate("github", {
-        failureRedirect: "http://localhost:5173/signin",
+        failureRedirect: "https://aivirtualassistant.onrender.com//signin",
         session: true,
     }),
     handleSocialLogin
