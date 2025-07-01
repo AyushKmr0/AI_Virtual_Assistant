@@ -15,7 +15,7 @@ const port = process.env.PORT || 5000;
 
 app.use(
     cors({
-        origin: "http://localhost:5173",
+        origin: "https://aivirtualassistant.onrender.com",
         credentials: true,
     })
 );
