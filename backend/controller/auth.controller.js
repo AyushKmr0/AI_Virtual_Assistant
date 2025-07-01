@@ -94,9 +94,9 @@ export const handleSocialLogin = async (req, res) => {
             secure: true,
         });
 
-        res.redirect("http://localhost:5173/oauth-success");
+        res.redirect("https://aivirtualassistant.onrender.com/oauth-success");
     } catch (error) {
         console.log("OAuth error:", error.message);
-        res.redirect("http://localhost:5173/signin");
+        res.redirect("https://aivirtualassistant.onrender.com/signin");
     }
 };
