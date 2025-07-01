@@ -9,11 +9,12 @@ function Customize2() {
         userData,
         backendImage,
         selectedImage,
-        serverUrl,
         setUserData,
         setBackendImage,
     } = useContext(userDataContext);
 
+    const serverUrl = `https://aivirtualassistant-backend.onrender.com`;
+    
     const [assistantName, setAssistantName] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
