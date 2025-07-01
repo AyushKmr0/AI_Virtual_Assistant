@@ -51,9 +51,7 @@ function Customize2() {
     
                 const { data } = await axios.post(
                     `${serverUrl}/api/user/updateAssistantNoFile`,
-                    {
-        console.log("data", data);
-                        
+                    {                        
                         assistantName: assistantName.trim(),
                         imageUrl: selectedImage,
                     },
@@ -73,9 +71,7 @@ function Customize2() {
             const { data } = await axios.post(
                 `${serverUrl}/api/user/updateAssistant`,
                 formData,
-                {
-        console.log("data", data);
-                    
+                {                    
                     withCredentials: true,
                     headers: {
                         "Content-Type": "multipart/form-data",
