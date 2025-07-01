@@ -59,25 +59,41 @@ export const updateAssistant = async (req, res) => {
 
 // Update Assistant without file upload --> JSON body with imageUrl
 export const updateAssistantNoFile = async (req, res) => {
-  try {
-    const { assistantName, imageUrl } = req.body;
+    try {
+        const { assistantName, imageUrl } = req.body;
 
-    if (!imageUrl || imageUrl.startsWith("blob")) {
-      return res.status(400).json({ message: "Invalid image URL" });
+        if (!assistantName && !imageUrl) {
+            return res.status(400).json({ message: "No update data provided." });
+        }
+
+        const updateFields = {};
+        if (assistantName) {
+            updateFields.assistantName = assistantName.trim();
+        }
+        if (imageUrl) {
+            if (imageUrl.startsWith("blob:")) {
+                return res.status(400).json({
+                    message: "Blob URLs are not supported for direct updates. Please provide a permanent URL.",
+                });
+            }
+            updateFields.assistantImage = imageUrl;
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            req.userId,
+            updateFields,
+            { new: true, runValidators: true }
+        ).select("-password");
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error("Error in updateAssistantNoFile:", error);
+        res.status(500).json({ message: `Update assistant without file error: ${error.message}` });
     }
-
-    // Update user with assistantName and imageUrl
-    const user = await User.findByIdAndUpdate(
-      req.userId,
-      { assistantName, assistantImage: imageUrl },
-      { new: true }
-    ).select("-password");
-
-    return res.status(200).json(user);
-  } catch (error) {
-    console.error("Update Assistant No File Error:", error);
-    return res.status(500).json({ message: "Server error" });
-  }
 };
 
 export const askToAssistant = async (req, res) => {
