@@ -46,7 +46,7 @@ function Customize2() {
                     `${serverUrl}/api/user/updateAssistantNoFile`,
                     {
                       assistantName: assistantName.trim(),
-                      imageUrl: absoluteUrl,
+                      imageUrl: absoluteUrl, 
                     },
                     {
                         withCredentials: true,
