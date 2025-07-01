@@ -26,25 +26,34 @@ function Customize2() {
     }, []);
 
     const handleUpdateAssistant = async () => {
+        console.log("assistantName", assistantName);
         if (assistantName.trim().length < 3)
             return alert("Please enter a valid name");
-
+    
         try {
+        console.log("try block");
+            
             setLoading(true);
             const formData = new FormData();
             formData.append("assistantName", assistantName.trim());
-
+        console.log("formData", formData);
+            
             if (
                 backendImage &&
                 typeof backendImage === "object" &&
                 (backendImage instanceof Blob || backendImage instanceof File)
             ) {
+        console.log("if block");
+                
                 formData.append("assistantImage", backendImage);
             } else if (selectedImage && !selectedImage.startsWith("blob:")) {
-
+        console.log("else if block");
+    
                 const { data } = await axios.post(
                     `${serverUrl}/api/user/updateAssistantNoFile`,
                     {
+        console.log("data", data);
+                        
                         assistantName: assistantName.trim(),
                         imageUrl: selectedImage,
                     },
@@ -59,11 +68,14 @@ function Customize2() {
             } else {
                 return alert("No valid image selected");
             }
-
+        console.log("else block");
+            
             const { data } = await axios.post(
                 `${serverUrl}/api/user/updateAssistant`,
                 formData,
                 {
+        console.log("data", data);
+                    
                     withCredentials: true,
                     headers: {
                         "Content-Type": "multipart/form-data",
