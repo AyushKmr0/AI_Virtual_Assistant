@@ -22,57 +22,69 @@ function Customize2() {
     const userName = userData?.name || "there";
 
     useEffect(() => {
-        setAssistantName("");
-    }, []);
+        if (userData?.assistantName) {
+            setAssistantName(userData.assistantName);
+        }
+    }, [userData]); 
 
     const handleUpdateAssistant = async () => {
-        if (assistantName.trim().length < 3)
-            return alert("Please enter a valid name");
+        if (assistantName.trim().length < 3) {
+            return alert("Please enter a valid name (at least 3 characters).");
+        }
 
         try {
             setLoading(true);
             const formData = new FormData();
             formData.append("assistantName", assistantName.trim());
 
-            let endpoint = ""; 
-
-            if (
-                backendImage &&
-                typeof backendImage === "object" &&
-                (backendImage instanceof Blob || backendImage instanceof File)
-            ) {
+            let endpoint = "";
+            let headers = {
+                "Content-Type": "application/json", 
+            };
+            let requestBody = { assistantName: assistantName.trim() };
+            
+            if (backendImage instanceof Blob || backendImage instanceof File) {
                 formData.append("assistantImage", backendImage);
-                endpoint = `${serverUrl}/api/user/updateAssistant`;
-            } else if (selectedImage && !selectedImage.startsWith("blob:")) {
-                formData.append("imageUrl", selectedImage);
+                endpoint = `${serverUrl}/api/user/updateAssistant`; 
+                headers = {
+                    "Content-Type": "multipart/form-data",
+                };
+                requestBody = formData; 
+            }
+            else if (selectedImage && !selectedImage.startsWith("blob:")) {
+                if (selectedImage !== userData?.assistantImage) {
+                     requestBody.imageUrl = selectedImage;
+                }
                 endpoint = `${serverUrl}/api/user/updateAssistantNoFile`; 
             } else {
-                endpoint = `${serverUrl}/api/user/updateAssistantNoFile`; 
+                endpoint = `${serverUrl}/api/user/updateAssistantNoFile`;
             }
 
             const { data } = await axios.post(
                 endpoint,
-                formData,
+                requestBody,
                 {
                     withCredentials: true,
-                    headers: {
-                        "Content-Type": "multipart/form-data", 
-                    },
+                    headers: headers, 
                 }
             );
 
             setUserData(data);
-            setBackendImage(data.image);
-            navigate("/");
+            setBackendImage(data.assistantImage); 
+            navigate("/"); 
         } catch (error) {
             console.error("Error updating assistant:", error);
             alert(
                 error?.response?.data?.message ||
-                    "Failed to update assistant. Please try again."
+                "Failed to update assistant. Please try again."
             );
         } finally {
             setLoading(false);
         }
+    };
+
+    const handleBack = () => {
+        navigate("/customize");
     };
 
     return (
