@@ -13,9 +13,12 @@ import "./config/passport.js";
 const app = express();
 const port = process.env.PORT || 5000;
 
+app.set("trust proxy", 1);
+
 app.use(
     cors({
         origin: "https://aivirtualassistant.onrender.com",
+        "https://aivirtualassistant-backend.onrender.com"
         credentials: true,
     })
 );
