@@ -6,7 +6,6 @@ import authRouter from "./routes/auth.routes.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.routes.js";
-import geminiResponse from "./gemini.js";
 import passport from "passport";
 import session from "express-session";
 import "./config/passport.js"; 
@@ -37,12 +36,6 @@ app.use(passport.session());
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
-
-app.get("/", async (req, res) => {
-    let prompt = req.query.prompt;
-    let data = await geminiResponse(prompt);
-    res.json(data);
-});
 
 async function startServer() {
     try {
