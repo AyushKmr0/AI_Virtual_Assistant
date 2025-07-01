@@ -26,56 +26,56 @@ function Customize2() {
     }, []);
 
     const handleUpdateAssistant = async () => {
-        if (assistantName.trim().length < 3) {
-            return alert("Please enter a valid name (at least 3 characters).");
-        }
+        if (assistantName.trim().length < 3)
+            return alert("Please enter a valid name");
 
         try {
             setLoading(true);
             const formData = new FormData();
             formData.append("assistantName", assistantName.trim());
 
-            let endpoint = "";
-            let headers = {
-                "Content-Type": "application/json", 
-            };
-            let requestBody = { assistantName: assistantName.trim() };
-            
-            if (backendImage instanceof Blob || backendImage instanceof File) {
+            if (
+                backendImage &&
+                typeof backendImage === "object" &&
+                (backendImage instanceof Blob || backendImage instanceof File)
+            ) {
                 formData.append("assistantImage", backendImage);
-                endpoint = `${serverUrl}/api/user/updateAssistant`; 
-                headers = {
-                    "Content-Type": "multipart/form-data",
-                };
-                requestBody = formData; 
-            }
-            else if (selectedImage && !selectedImage.startsWith("blob:")) {
-                if (selectedImage !== userData?.assistantImage) {
-                     requestBody.imageUrl = selectedImage;
-                }
-                endpoint = `${serverUrl}/api/user/updateAssistantNoFile`; 
+            } else if (selectedImage && !selectedImage.startsWith("blob:")) {
+
+                const { data } = await axios.post(
+                    `${serverUrl}/api/user/updateAssistantNoFile`,
+                    {
+                        assistantName: assistantName.trim(),
+                        imageUrl: selectedImage,
+                    },
+                    {
+                        withCredentials: true,
+                    }
+                );
+
+                setUserData(data);
+                navigate("/");
+                return;
             } else {
-                endpoint = `${serverUrl}/api/user/updateAssistantNoFile`;
+                return alert("No valid image selected");
             }
 
             const { data } = await axios.post(
-                endpoint,
-                requestBody,
+                `${serverUrl}/api/user/updateAssistant`,
+                formData,
                 {
                     withCredentials: true,
-                    headers: headers, 
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
                 }
             );
 
             setUserData(data);
-            setBackendImage(data.assistantImage); 
-            navigate("/"); 
-        } catch (error) {
-            console.error("Error updating assistant:", error);
-            alert(
-                error?.response?.data?.message ||
-                "Failed to update assistant. Please try again."
-            );
+            navigate("/");
+        } catch (err) {
+            console.error("Error updating assistant:", err);
+            alert("Something went wrong while updating assistant.");
         } finally {
             setLoading(false);
         }
