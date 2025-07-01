@@ -8,6 +8,10 @@ import Customize2 from "./pages/Customize2";
 import OAuthSuccess from "./pages/OAuthSuccess";
 import UnlockSpeech from "./UnlockSpeech";
 import { userDataContext } from "./context/UserContext";
+import axios from "axios";
+
+axios.defaults.baseURL = "https://aivirtualassistant-backend.onrender.com";
+axios.defaults.withCredentials = true;
 
 function App() {
     const { userData, loading } = useContext(userDataContext);
