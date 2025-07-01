@@ -34,49 +34,42 @@ function Customize2() {
             const formData = new FormData();
             formData.append("assistantName", assistantName.trim());
 
+            let endpoint = ""; 
+
             if (
                 backendImage &&
                 typeof backendImage === "object" &&
                 (backendImage instanceof Blob || backendImage instanceof File)
             ) {
                 formData.append("assistantImage", backendImage);
+                endpoint = `${serverUrl}/api/user/updateAssistant`;
             } else if (selectedImage && !selectedImage.startsWith("blob:")) {
-                 const absoluteUrl = `${window.location.origin}${selectedImage}`;
-                  
-                  const { data } = await axios.post(
-                    `${serverUrl}/api/user/updateAssistantNoFile`,
-                    {
-                      assistantName: assistantName.trim(),
-                      imageUrl: absoluteUrl, 
-                    },
-                    {
-                        withCredentials: true,
-                    }
-                );
-
-                setUserData(data);
-                navigate("/");
-                return;
+                formData.append("imageUrl", selectedImage);
+                endpoint = `${serverUrl}/api/user/updateAssistantNoFile`; 
             } else {
-                return alert("No valid image selected");
+                endpoint = `${serverUrl}/api/user/updateAssistantNoFile`; 
             }
 
             const { data } = await axios.post(
-                `${serverUrl}/api/user/updateAssistant`,
+                endpoint,
                 formData,
                 {
                     withCredentials: true,
                     headers: {
-                        "Content-Type": "multipart/form-data",
+                        "Content-Type": "multipart/form-data", 
                     },
                 }
             );
 
             setUserData(data);
+            setBackendImage(data.image);
             navigate("/");
-        } catch (err) {
-            console.error("Error updating assistant:", err);
-            alert("Something went wrong while updating assistant.");
+        } catch (error) {
+            console.error("Error updating assistant:", error);
+            alert(
+                error?.response?.data?.message ||
+                    "Failed to update assistant. Please try again."
+            );
         } finally {
             setLoading(false);
         }
